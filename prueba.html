@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="contenedor">
+		<header>
+			<div class="logo">
+				<p id="Welcome"> Bienvenida</p>
+               
+			</div>
+
+			<nav>
+				<a href="#">Inicio</a>
+				<a href="#">Sobre Nosotros</a>
+				<a href="#">Servicios</a>
+				<a href="#">Contacto</a>
+			</nav>
+            <div class="buscar">
+                <input type="text" name="search" placeholder="Buscar"> 
+
+            </div>
+		</header>
+        <div class="seccion1">
+            <div class="sec1">
+                <form name="for" method="post" class="form-login">
+                    <p>Usuario:</p> <input class="controls" type="text" name="login" id="login">
+                    <p>Contraseña:</p> <input class="controls" type="password" name="password" id="password">
+                    <br><br>
+                    <input onclick="iniciarSesion()" type="button" value="Iniciar Sesion" class="buttons">
+                </form>
+                <script type="text/javascript">
+                    var user =document.getElementById("login");
+                    var psw =document.getElementById("password");
+                    var correcto = false;
+                    
+                    if(!user.equals('') && !psw.equals('')){
+                        iniciarSesion();
+                    }
+
+                    function iniciarSesion(){
+                        if (user.value=="Carla"){
+                            if(psw.value=="1234"){
+                                correcto=true;
+                            }
+                        }
+                        if (correcto){
+                            document.getElementById("Welcome").innerHTML = "Hola " + user.value + ", Bienvenida";
+                        }
+                    }
+                </script>
+            </div>
+
+            <div class="sec1">
+                <form name="convertidor" class="form-login">
+                    <h2>CONVERTIDOR DE BOLIVIANOS A DOLARES <br> PRECIO DEL DOLAR: 6.97</h2>
+                    <br> INGRESE MONTO EN BOLIVIANO : <input type="text" name="boliviano">
+                    <hr>
+                    <br> BOLIVIANO EN DOLARES ES : <input type="text" name="dolar">
+                    <br>
+                    <br><input class="buttons" type="button" value="Convertir" onclick="calcular()">
+                </form>
+                <script type="text/javascript">
+                    function calcular(){
+                        var bol=(document.convertidor.boliviano.value)*1;
+                        var tot=bol*6.97;
+                        document.convertidor.dolar.value=tot;
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="carrusel">
+            <div class="itemCarrusel" id="item1">
+                <div class="targetaCarrusel" id="targeta1"> <img class="image" src="https://www.pngkit.com/png/detail/159-1599623_melhores-blogs-de-tecnologia-de-2016-tecnologia-png.png" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb" alt="Melhores Blogs De Tecnologia De 2016 - Tecnologia Png - 569x316 PNG  Download - PNGkit" data-noaft="1" style="width: 1000px; height: 270px; margin: 10px 0px;"></div>
+                <div class="flechaCarrusel">
+                    <a href="#item3"><i><</i> </a>
+                    <a href="#item2"><i>></i> </a>
+                    
+                </div>
+            </div>
+
+            <div class="itemCarrusel" id="item2">
+                <div class="targetaCarrusel" id="targeta2"> <img class="image" src="https://computacioninteractiva.com/wp-content/uploads/2019/07/INVERTIR-EN-TECNOLOGIA.png" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb" alt="Fechar" data-noaft="1" style="width: 1000px; height: 270px; margin: 10px 0px;"></div>
+                <div class="flechaCarrusel">
+                    <a href="#item1"><i><</i> </a>
+                    <a href="#item3"><i>></i> </a>
+                </div>
+            </div>
+
+            <div class="itemCarrusel" id="item3">
+                <div class="targetaCarrusel" id="targeta3"> <img class="image" src="https://sintec.com/wp-content/uploads/2019/07/SAP-DDM-II-1.jpg" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb" alt="Tecnologia - Sintec Consulting" data-noaft="1" style="width: 1000px; height: 270px; margin: 10px 0px;"></div>
+                <div class="flechaCarrusel">
+                    <a href="#item2"><i><</i> </a>
+                    <a href="#item1"><i>></i> </a>
+                </div>
+            </div>       
+        </div>
+
+        <div class="conteBoton">
+            <a href="#item1"><input type="submit" id="btn-submit" value="FOTO1"></a>
+            <a href="#item2"><input type="submit" id="btn-submit" value="FOTO2"></a>
+            <a href="#item3"><input type="submit" id="btn-submit" value="FOTO3"></a>
+        </div>
+     
+
+        <div class="seccion">
+            <div class="cont1"><div class="sec2"> SECCION 1 </div>
+            <h1>SECCION 1</h1>
+            <h2> Bienvenidos <br> a la Seccion 1 </h2>
+            <input type="submit" class="botSec" value="BOTON 1">
+            </div>
+
+            <div class="cont2"><div class="sec2"> SECCION 2</div>
+            <h1>SECCION 2</h1>
+            <h2> Bienvenidos <br> a la Seccion 2 </h2>
+            <input type="submit" class="botSec" value="BOTON 2">
+            </div>
+
+            <div class="cont3"><div class="sec2"> SECCION 3</div>
+            <h1>SECCION 3</h1>
+            <h2> Bienvenidos <br> a la Seccion 3 </h2>
+            <a href="#"><input  type="submit" class="botSec"  value="BOTON 3"></a>
+            </div>
+        </div>
+        
+		
+
+		<footer>
+			<section class="foot">
+                <section class="registro">
+                    <div class="input">
+                        <h1>REGISTRO</h1>
+    
+                        <input class="medidas" type="text">
+                        <br></br>
+                        <button>
+                            Registrar
+                        </button>
+    
+                    </div>
+    
+    
+                </section>
+    
+                <section class="registro">
+                    <div >
+                        <button class="registro-text">LOGO</button>
+                    </div>
+                </section>
+    
+                <section class="contentfooter">
+                    <div class="caja">
+                        <h1>NUESTRA EMPRESA</h1>
+                        <br>
+                        <ul class="text">¿Quines somos?</ul>
+                        <ul class="text">Encuentra tu tienda</ul>
+                        <ul class="text">Seguridad</ul>
+                        <ul class="text">Informatica</ul>
+                        
+                            
+                        
+                    </div>
+                    <div class="caja">
+                        <h1>SERVICIOS</h1>
+                        <br>
+                        <ul class="text">Tipos de entrega</ul>
+                        <ul class="text">Instalaciones </ul>
+                        <ul class="text">Garantia Plus</ul>
+                        <ul class="text">Financiacion</ul>
+                    </div>
+                    <div class="caja">
+                        <h1>¿TE AYUDAMOS?</h1>
+                        <br>
+                        <ul class="text">Contacto</ul>
+                        <ul class="text">Pregunstas </ul>
+                        <ul class="text">Garantias </ul>
+                        <ul class="text">Devoluciones</ul>
+                    </div>
+                    <div class="caja">
+                        <h1>OFERTAS Y CAMPAÑAS</h1>
+                        <br>
+                        <ul>
+                            <li class="text">Blac Friday</li>
+                            <li class="text">Dia sin IVA</li>
+                            <li class="text">Cyber Monday</li>
+                            <li class="text">Blue Monday</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+			
+		</footer>
+	</div>
+</body>
+</html>
