@@ -1,0 +1,40 @@
+.clearfix{
+    margin: 1em .1em;
+}
+.clearfix p{
+    color:black;
+    text-align: justify;
+    font-size: 25px;
+}
+.card-body h5{
+    color: black;
+}
+.card-text{
+    color: black;
+}
+.col-md-6 float-md-end mb-3 ms-md-3{
+    width: 700px;
+    height: 800px;
+}
+.d-flex input{
+    margin:.9em 0em;
+}
+
+.d-flex button{
+    margin:1.5em .6em;
+    padding: .3em 2.4em;
+}
+
+.container table{
+    margin: 1em 10em;
+}
+
+table .btnedit{
+    color: rgb(128, 139, 128);
+    cursor: pointer;
+}
+
+table .btndelete{
+    color: red;
+    cursor: pointer;
+}

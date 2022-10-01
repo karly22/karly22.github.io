@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXAMEN final</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link href="estilo.css" rel="stylesheet">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"
+    integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!--<script src="indexdb.js"></script>-->
+  <script src="indexdb.js"></script>
+
+
+</head>
+
+<body class="p-3 mb-2 bg-secondary text-white" onload="listar(); listarCliente();">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">NOTARIA DE FE PUBLICA <i class="fas fa-user"></i>
+        <p id="Welcome"> Carla</p>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clientes.html">Clientes</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="tramites.html">Tramites</a>
+          </li>
+          
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container text-center">
+    <h1 class="bg-light py-4 text-info">TRAMITES</h1>
+  </div>
+  <div class="d-flex justify-content-center">
+    <form class="w-50">
+      <input type="text" id="idTramite" class="form-control" readonly placeholder="Id" autocomplete="off">
+      <input type="number" id="Nrotramite" class="form-control" placeholder="Nro" autocomplete="off">
+      <input type="text" id="nombreTramite" class="form-control" placeholder="Tramite" autocomplete="off">
+
+      <div class="row form-group">
+        <div class="col">
+          <input type="text" id="tipoTramite" class="form-control m-0" placeholder="Tipo de Tramite" autocomplete="off">
+
+        </div>
+        <div class="col">
+          <input type="date" id="fecha" class="form-control m-0" placeholder="Fecha" autocomplete="off">
+
+        </div>
+      </div>
+      <div class="row form-group pt-4">
+        <div class="col">
+          <select id="Solicitante" class="form-control">
+            <option selected>Seleccionar</option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group pt-4">
+
+        <div class="col">
+          <select id="Interesado" class="form-control">
+            <option selected>Seleccionar</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="text" id="estado" class="form-control" placeholder="Estado" autocomplete="off">
+    </form>
+  </div>
+  <div class="container text-center">
+    <button onclick="guardar()" class="btn btn-success" id="btn-create">Registrar</button>
+    <button onclick="actualizar()" class="btn btn-warning" id="btn-update">Actualizar</button>
+    
+  </div>
+
+  <div class="container d-flex">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nro TRAMITE</th>
+          <th scope="col"> TRAMITE</th>
+          <th scope="col">TIPO DE TRAMITE</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">SOLICITANTE</th>
+          <th scope="col">FAVOR DE</th>
+          <th scope="col">ESTADO</th>
+          <th scope="col">EDITAR</th>
+          <th scope="col">ELIMINAR</th>
+        </tr>
+      </thead>
+      <tbody id="mostrarLista">
+
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    /*function guardar() {
+
+       var transaccion = db.transaction("paciente", "readwrite");
+       const objetoPaciente = transaccion.objectStore('paciente');
+       var paciente=objetoPaciente.get('948583');
+       paciente.onsuccess=function(e){
+           console.log(e.target.result);
+           console.log(e.target.result['nombre']);
+       }
+       var cita ={
+           idCita:Math.floor(100000 + Math.random() * 900000),
+           descripcion:document.getElementById('descripcion').value,
+           id: 948583
+       }
+       var transaCita = db.transaction("citas", "readwrite");
+       const objetoCita = transaCita.objectStore('citas');
+       const cargarInfo = objetoCita.add(cita);
+       console.log("cargar informacion", cargarInfo);    
+
+   }*/
+
+    function guardar() {
+      var tramites = {
+        idTramite: Math.floor(100000 + Math.random() * 900000),
+        Nrotramite: document.getElementById('Nrotramite').value,
+        nombreTramite: document.getElementById('nombreTramite').value,
+        tipoTramite: document.getElementById('tipoTramite').value,
+        fecha: document.getElementById('fecha').value,
+        Solicitante: document.getElementById('Solicitante').value,
+        Interesado: document.getElementById('Interesado').value,
+        estado: document.getElementById('estado').value,
+
+      }
+
+
+      var transaccionTramite = db.transaction("tramites", "readwrite");
+      const objetoTramite = transaccionTramite.objectStore('tramites');
+      // insertar en el objeto
+      // const cargarInfo= objeto.add(informacion);
+      const cargarInfo = objetoTramite.add(tramites);
+      console.log("cargar informacion", cargarInfo);
+
+      listar();
+
+    }
+    function listar() {
+      var lista = document.getElementById("mostrarLista");
+      var Parent = document.getElementById("mostrarLista");
+      while (Parent.hasChildNodes()) {
+        Parent.removeChild(Parent.firstChild);
+      }
+
+      db = dbConnection.result;
+      // lectura de tablas
+      var transaccionTramite = db.transaction("tramites", "readonly");
+      const objeto = transaccionTramite.objectStore('tramites');
+      console.log("desde qui result lista")
+      console.log(objeto);
+      // iterar los elementos
+      const cursor = objeto.openCursor();
+      cursor.onsuccess = (e) => {
+        const c = e.target.result;
+        if (c) {
+          // insertando en el html de UL, se realizo algunas concatenaciones adicionales
+          lista.innerHTML += "<tr><td class='list-group-item'>" + c.value['idTramite'] + '</td> <td> ' + c.value['Nrotramite'] + '</td> <td>' + c.value['nombreTramite'] + '</td> <td>' + c.value['tipoTramite'] + '</td> <td>' + c.value['fecha'] + '</td><td>' + c.value['Solicitante'] + '</td> <td>' + c.value['Interesado'] + '</td> <td>' + c.value['estado'] + '</td> <td>'
+            + "<button onclick='cargar(" + c.value['idTramite'] + ")' type='submit' class='btn btn-success'>Actualizar</button> <td><button onclick='eliminar(" + c.value['idTramite'] + ")' type='submit' class='btn btn-danger'>Eliminar</button></td></tr>"
+          c.continue();
+        } else {
+          console.log("no tiene datos");
+
+        }
+      }
+    }
+
+    function listarCliente() {
+      var sol = document.getElementById("Solicitante");
+      var interesado = document.getElementById("Interesado");
+
+
+
+      db = dbConnection.result;
+      // lectura de tablas
+      var transaccion = db.transaction("cliente", "readonly");
+      const objeto = transaccion.objectStore('cliente');
+
+      console.log(objeto);
+      // iterar los elementos
+      const cursor = objeto.openCursor();
+      cursor.onsuccess = (e) => {
+        const c = e.target.result;
+        if (c) {
+          var option = document.createElement("option");
+          option.value = c.value['idCliente'];
+          var optionText = document.createTextNode(c.value['nombre'] + ' ' + c.value['apellidoPaterno'] + ' ' + c.value['apellidoMaterno']);
+          option.appendChild(optionText);
+          sol.appendChild(option);
+          /*para interesado*/
+          var option = document.createElement("option");
+          option.value = c.value['idCliente'];
+          var optionText = document.createTextNode(c.value['nombre'] + ' ' + c.value['apellidoPaterno'] + ' ' + c.value['apellidoMaterno']);
+          option.appendChild(optionText);
+          interesado.appendChild(option);
+
+          c.continue();
+        }
+      }
+    }
+    function eliminar(idTramite) {
+      console.log(idTramite);
+      var transaccionTramite = db.transaction("tramites", "readwrite");
+      const objeto = transaccionTramite.objectStore('tramites');
+      // insertar en el objeto
+      const eliminado = objeto.delete(idTramite);
+      eliminado.onsuccess = () => {
+          listar();
+      }
+      eliminado.onerror = (error) => {
+          console.log(error);
+      }
+  }
+  
+  function actualizar() {
+    var transaccion = db.transaction("tramites", "readwrite");
+    const objeto = transaccion.objectStore('tramites');
+    // insertar en el objeto
+
+    
+    const actualizarInfo = objeto.put({
+        idTramite:document.getElementById('idTramite').value,
+        Nrotramite: document.getElementById('Nrotramite').value,
+        nombreTramite: document.getElementById('nombreTramite').value,
+        tipoTramite: document.getElementById('tipoTramite').value,
+        fecha: document.getElementById('fecha').value,
+        Solicitante: document.getElementById('Solicitante').value,
+        Interesado: document.getElementById('Interesado').value,
+        estado: document.getElementById('estado').value,
+    });
+
+    listar();
+    if (actualizarInfo)
+        console.log("Se agrego con exito", actualizarInfo);
+}
+
+
+function cargar(idTramite) {
+  var lista = document.getElementById("mostrarLista");
+  //console.log(lista);
+  db = dbConnection.result;
+  // lectura de tablas
+  var transaccion = db.transaction("tramites", "readonly");
+  
+
+  const objeto = transaccion.objectStore('tramites');
+  var tramite=objeto.get(idTramite);
+  tramite.onsuccess=function(e){
+    console.log(e.target.result);
+    document.getElementById('idTramite').value=e.target.result['idTramite'];
+    document.getElementById('Nrotramite').value=e.target.result['Nrotramite'];
+    document.getElementById('nombreTramite').value=e.target.result['nombreTramite'];
+    document.getElementById('tipoTramite').value=e.target.result['tipoTramite'];
+    document.getElementById('fecha').value=e.target.result['fecha'];
+    document.getElementById('Solicitante').value=e.target.result['Solicitante'];
+    document.getElementById('Interesado').value=e.target.result['Interesado'];
+    document.getElementById('estado').value=e.target.result['estado'];
+    document.getElementById('btn-create').style.display = 'none';
+    document.getElementById('btn-update').style.display = 'block';
+    document.getElementById('idTramite').setAttribute('readonly', 'readonly');
+
+}}
+
+  </script>
+
+
+
+
+
+  <footer class="bd-footer py-4 py-md-5 mt-5 bg-light">
+    <div class="container py-4 py-md-5 px-4 px-md-3">
+      <div class="row">
+        <div class="col-lg-3 mb-3">
+          <a class="d-inline-flex align-items-center mb-2 link-dark text-decoration-none" href="/" aria-label="Oreja">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="d-block me-2" viewBox="0 0 118 94"
+              role="img">
+              <title>Notaría Nº 2</title>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"
+                fill="currentColor"></path>
+            </svg>
+            <span class="fs-5">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Notaría Nº 2</font>
+              </font>
+            </span>
+          </a>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-2">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Brindamos trato amable y personalizado por eso que le brindamos
+                </font>
+              </font><a href="/docs/5.2/about/team/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"></font>
+                </font>
+              </a>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;"> </font>
+              </font><a href="https://github.com/twbs/bootstrap/graphs/contributors">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"></font>
+                </font>
+              </a>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;"> .</font>
+              </font>
+            </li>
+            <li class="mb-2">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">a cada cliente asesoría sobre los trámites </font>
+              </font><a href="https://github.com/twbs/bootstrap/blob/main/LICENSE" target="_blank"
+                rel="license noopener">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"></font>
+                </font>
+              </a>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;"> </font>
+              </font><a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"></font>
+                </font>
+              </a>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;"> .</font>
+              </font>
+            </li>
+            <li class="mb-2">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">notariales conforme a la ley</font>
+              </font>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+          <h5>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">Enlaces</font>
+            </font>
+          </h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Hogar</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Documentos</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/examples/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Ejemplos</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://icons.getbootstrap.com/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Iconos</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://themes.getbootstrap.com/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Temas</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://blog.getbootstrap.com/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Blog</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://cottonbureau.com/people/bootstrap">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Tienda de botín</font>
+                </font>
+              </a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">Guías</font>
+            </font>
+          </h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="/docs/5.2/getting-started/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Empezando</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/examples/starter-template/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Plantilla de inicio</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/getting-started/webpack/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">paquete web</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/getting-started/parcel/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Paquete o empaquetar</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="/docs/5.2/getting-started/vite/">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Vite</font>
+                </font>
+              </a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">Proyectos</font>
+            </font>
+          </h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://github.com/twbs/bootstrap">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Arranque 5</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/twbs/bootstrap/tree/v4-dev">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Arranque 4</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/twbs/icons">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Iconos</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/twbs/rfs">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">RFS</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/twbs/bootstrap-npm-starter">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">iniciador npm</font>
+                </font>
+              </a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2 mb-3">
+          <h5>
+            <font style="vertical-align: inherit;">
+              <font style="vertical-align: inherit;">Comunidad</font>
+            </font>
+          </h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="https://github.com/twbs/bootstrap/issues">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Problemas</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/twbs/bootstrap/discussions">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Discusiones</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://github.com/sponsors/twbs">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Patrocinadores corporativos</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://opencollective.com/bootstrap">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Colectivo Abierto</font>
+                </font>
+              </a></li>
+            <li class="mb-2"><a href="https://stackoverflow.com/questions/tagged/bootstrap-5">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">Desbordamiento de pila</font>
+                </font>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+
+</html>
